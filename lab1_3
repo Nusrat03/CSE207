@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+int main()
+{
+
+    char c[200];
+    char *p_c;
+    p_c=c;
+
+    int i,n, vowel=0,cons=0;
+    scanf("%s",&c);
+    printf("%s\n",c);
+    
+    for(i=0 ; *(p_c+i)!='\0' ; i++)
+    {
+      if(*(p_c+i)=='a'||*(p_c+i)=='e'||*(p_c+i)=='i'||*(p_c+i)=='o'||*(p_c+i)=='u'||*(p_c+i)=='A'||*(p_c+i)=='E'||*(p_c+i)=='I'||*(p_c+i)=='O'||*(p_c+i)=='U')
+        {
+          vowel++;
+        }
+      else 
+        {
+          cons++;
+        }
+     
+    }
+    
+    printf("The number of vowels are : %d\n",vowel);
+    printf("The number of consonants are : %d\n",cons);
+
+
+}
