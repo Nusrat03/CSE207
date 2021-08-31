@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+typedef struct node 
+{
+    int num;                    
+    struct node *next;       
+}Node;
+
+Node *startNode;
+
+void createNodeList(int n);     
+int NodeCount();	            
+void displayList();             
+
+int main()
+{
+    int n, totalNode;
+		
+    printf("Create a singly linked list and count the number of nodes :\n");
+		
+    printf(" Input the number of nodes : ");
+    scanf("%d", &n);
+    
+    createNodeList(n);
+    
+    printf("\n Data entered in the list are : \n");		
+    displayList();
+    
+    totalNode = NodeCount();
+    printf("\n Total number of nodes = %d\n", totalNode);
+    
+    return 0;
+}
+void createNodeList(int n)
+{
+    Node *frontNode, *temp;
+    int num, i;
+    
+    startNode = (Node *)malloc(sizeof(Node));
+   
+    printf(" Input data for node 1 : ");
+    scanf("%d", &num);
+        
+    startNode-> num = num;      
+    startNode-> next = NULL; 
+    temp = startNode;
+
+    for(i=2; i<=n; i++)
+    {
+        frontNode = (Node *)malloc(sizeof(Node));
+           
+        printf(" Input data for node %d : ", i);
+        scanf(" %d", &num);
+        
+        frontNode->num = num;
+        frontNode->next = NULL; 
+        temp->next = frontNode; 
+        temp = temp->next;
+    }
+} 
+
+int NodeCount()
+{
+    int c = 0;
+    Node *temp;
+    temp = startNode;
+
+    while(temp != NULL)
+    {
+        c++;
+        temp = temp->next;
+    }
+    return c;
+}
+
+void displayList()
+{
+    Node *temp;
+   
+    temp = startNode;
+    while(temp != NULL)
+    {
+        printf(" Data = %d\n", temp->num);  
+            temp = temp->next;                
+        
+    }
+} 
