@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+    int data;
+    struct Node *next;
+} Node;
+
+void enqueue(Node **frontnode, Node **rearnode, int value) {
+    Node *newnode = (Node *) malloc(sizeof(Node *));
+
+    if (newnode == NULL) {
+        printf("Queue is full!\n");
+    } else {
+        newnode->data = value;
+        newnode->next = NULL;
+
+        if ((*frontnode) == NULL) {
+            (*frontnode) = (*rearnode) = newnode;
+        } else {
+
+            (*rearnode)->next = newnode;
+            (*rearnode) = newnode;
+        }
+    }
+}
+
+int dequeue(Node **frontnode) {
+    int x = -1;
+
+    Node *deletenode;
+
+    if ((*frontnode) == NULL) {
+        printf("Queue is empty.\n");
+    } else {
+        deletenode = (*frontnode);
+        (*frontnode) = (*frontnode)->next;
+        x = deletenode->data;
+        free(deletenode);
+    }
+
+    return x;
+}
+
+int checkIfQueueEmpty(Node *frontnode) {
+    if (frontnode == NULL) {
+        return 1;
+    }
+    return 0;
+}
+
+void displayQueue(Node *frontnode) {
+    Node *temp = frontnode;
+
+    while(temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+void copyQueue(Node **frontnode) {
+    Node *frontcopy = NULL, *rearcopy = NULL;
+
+    while (!checkIfQueueEmpty((*frontnode))) {
+        int x = dequeue(&(*frontnode));
+
+        enqueue(&frontcopy, &rearcopy, x);
+    }
+
+    displayQueue(frontcopy);
+}
+
+int main() {
+    int n, num;
+    Node *front = NULL, *rear = NULL;
+
+    printf("Enter number of this : ");
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &num);
+        enqueue(&front, &rear, num);
+    }
+
+    printf("before copying : ");
+    displayQueue(front);
+
+    printf("After copying : ");
+    copyQueue(&front);
+
+    return 0;
+}
