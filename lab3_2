@@ -1,0 +1,118 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int num;
+    struct node * preptr;
+    struct node * nextptr;
+}*start_node, *end_node;
+ 
+void create_doublylinked_list(int n)
+{
+    int i, num;
+    struct node *front_node;
+ 
+    if(n >= 1)
+    {
+        start_node = (struct node *)malloc(sizeof(struct node));
+ 
+        if(start_node != NULL)
+        {
+            printf(" Input data for node 1 : ");
+            scanf("%d", &num);
+ 
+            start_node->num = num;
+            start_node->preptr = NULL;
+            start_node->nextptr = NULL;
+            end_node = start_node;
+            i=0;
+            while( i<=n)
+            {
+                front_node = (struct node *)malloc(sizeof(struct node));
+                if(front_node != NULL)
+                {
+                    printf(" Input data for node %d : ", i);
+                    scanf("%d", &num);
+                    front_node->num = num;
+                    front_node->preptr = end_node;    
+                    front_node->nextptr = NULL;
+                    end_node->nextptr = front_node;   
+                    end_node = front_node;            
+                }
+                else
+                {
+                    printf("Sorry ! can't allocate the memory");
+                    break;
+                }
+                i++;
+            }
+        }
+        else
+        {
+            printf("Sorry ! can't allocate the memory");
+        }
+    }
+}
+
+void insert_doublylinked_list_beginning(int num)
+{
+    struct node * newnode;
+    if(start_node == NULL)
+    {
+        printf(" No data found in the list!\n");
+    }
+    else
+    {
+        newnode = (struct node *)malloc(sizeof(struct node));
+        newnode->num = num;
+        newnode->nextptr = start_node;  
+        newnode->preptr = NULL;     
+        start_node->preptr = newnode;  
+        start_node = newnode;           
+    }
+}
+
+void display_doublylinked_list(int m)
+{
+    struct node * tmp;
+    int n = 1;
+    if(start_node == NULL)
+    {
+        printf(" No data found in the List yet.");
+    }
+    else
+    {
+        tmp = start_node;
+        if (m==1)
+        {
+        printf(" Data entered in the list are :\n");
+        }
+        else
+        {
+         printf("\n After insertion the new list are :\n");   
+        }
+        while(tmp != NULL)
+        {
+            printf(" node %d : %d\n", n, tmp->num);
+            n++;
+            tmp = tmp->nextptr; 
+        }
+    }
+}
+int main()
+{
+    int n,num1,a;
+    start_node = NULL;
+    end_node = NULL;
+    printf(" Input the number of nodes : ");
+    scanf("%d", &n);
+    create_doublylinked_list(n); 
+    a=1;
+    display_doublylinked_list(a);
+    printf(" Input data for the first node : ");
+    scanf("%d", &num1);
+    insert_doublylinked_list_beginning(num1);
+    a=2;
+    display_doublylinked_list(a);
+    return 0;
+}
