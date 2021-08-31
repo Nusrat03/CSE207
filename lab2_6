@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node 
+{
+    int num;                    
+    struct node *next;       
+}Node;
+ 
+Node *structNode; 
+
+void createNodeList(int n);     
+void LastNodeDelete();	    
+void displayList();             
+
+int main()
+{
+    int n, num, pos;
+	printf("Delete the last node of Singly Linked List :\n");
+	
+    printf(" Input the number of nodes : ");
+    scanf("%d", &n);
+    createNodeList(n);
+
+    printf("Data entered in the list are : \n");		
+    displayList();
+    LastNodeDelete();
+	
+    printf("The new list after deletion the last node are  : \n");	
+    displayList();
+
+    return 0;
+}
+void createNodeList(int n)
+{
+    Node *frontNode, *temp;
+    int num, i;
+ 
+    structNode = (Node *)malloc(sizeof(Node));
+ 
+    printf(" Input data for node 1 : ");
+    scanf("%d", &num);
+ 
+    structNode-> num = num;      
+    structNode-> next = NULL; 
+    temp = structNode;
+ 
+    for(i=2; i<=n; i++)
+    {
+        frontNode = (Node *)malloc(sizeof(Node));
+           
+        printf(" Input data for node %d : ", i);
+        scanf(" %d", &num);
+
+        frontNode->num = num;      
+        frontNode->next = NULL; 
+
+        temp->next = frontNode; 
+        temp = temp->next;
+    }
+} 
+
+void LastNodeDelete()
+{
+    Node *del, *preNode;
+    
+    del = structNode;
+    preNode = structNode;
+
+    while(del->next != NULL)
+    {
+        preNode = del;
+        del = del->next;
+    }
+    if(del == structNode)
+    {
+        structNode = NULL;
+    }
+    else
+    {
+        preNode->next = NULL;
+    }
+ 
+        free(del);
+}
+
+void displayList()
+{
+    Node *temp;
+    temp = structNode;
+    while(temp != NULL)
+    {
+        printf(" Data = %d\n", temp->num);
+        temp = temp->next;                 
+    }
+}
