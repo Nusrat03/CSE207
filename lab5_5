@@ -1,0 +1,121 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+    int data;
+    struct Node *next;
+} Node;
+
+void enqueue(Node **frontnode, Node **rearnode, int value) {
+    Node *newnode = (Node *) malloc(sizeof(Node *));
+
+    if (newnode == NULL) {
+        printf("Queue is full!\n");
+    } else {
+        newnode->data = value;
+        newnode->next = NULL;
+
+        if ((*frontnode) == NULL) {
+            (*frontnode) = (*rearnode) = newnode;
+        } else {
+
+            (*rearnode)->next = newnode;
+            (*rearnode) = newnode;
+        }
+    }
+}
+
+int dequeue(Node **frontnode) {
+    int x = -1;
+
+    Node *deletenode;
+
+    if ((*frontnode) == NULL) {
+        printf("Queue is empty.\n");
+    } else {
+        deletenode = (*frontnode);
+        (*frontnode) = (*frontnode)->next;
+        x = deletenode->data;
+        free(deletenode);
+    }
+
+    return x;
+}
+
+int checkIfQueueEmpty(Node *frontnode) {
+    if (frontnode == NULL) {
+        return 1;
+    }
+    return 0;
+}
+
+void push(Node **node, int value) {
+    Node *temp = (Node *) malloc(sizeof(Node));
+
+    if (temp == NULL) {
+        printf("Stack overflow!\n");
+    } else {
+        temp->data = value;
+        temp->next = (*node);
+        (*node) = temp;
+    }
+}
+
+int pop(Node **node) {
+    Node *deletenode;
+    int x = -1;
+
+    if ((*node) == NULL) {
+        printf("Stack underflow!\n");
+    } else {
+        deletenode = (*node);
+        (*node) = (*node)->next;
+        x = deletenode->data;
+        free(deletenode);
+    }
+
+    return x;
+}
+
+int isStackEmpty(Node *node) {
+    return node ? 0 : 1;
+}
+
+void displayQueue(Node *frontnode) {
+    Node *temp = frontnode;
+
+    while(temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+void copyFromStack(Node **stackintop) {
+    Node *front = NULL, *rear = NULL;
+
+    while (!isStackEmpty((*stackintop))) {
+        int x = pop(&(*stackintop));
+        enqueue(&front, &rear, x);
+    }
+
+    displayQueue(front);
+}
+
+int main() {
+    Node *stacktop = NULL;
+
+    int n, num;
+
+    printf("Enter number of nums: ");
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &num);
+        push(&stacktop, num);
+    }
+
+    copyFromStack(&stacktop);
+
+    return 0;
+}
