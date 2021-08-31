@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node 
+{
+    int num;                    
+    struct node *next;      
+}Node;
+
+Node *startNode;
+void createNodeList(int n);     
+void reverseDispList();       
+void displayList();             
+
+int main()
+{
+    int n;
+
+	printf("Create a singly linked list and print it in reverse order :\n");
+			
+    printf(" Input the number of nodes : ");
+    scanf("%d", &n);
+    createNodeList(n);
+    
+    printf("\n Data entered in the list are : \n");		
+    displayList();
+    
+    reverseDispList();
+    
+    printf("\n The list in reverse are :  \n");
+    displayList();
+    
+    return 0;
+}
+
+void createNodeList(int n)
+{
+    Node *frontNode, *temp;
+    int num, i;
+
+    startNode = (Node *)malloc(sizeof(Node));
+   
+     printf(" Input data for node 1 : ");
+    scanf("%d", &num);
+
+    startNode-> num = num;      
+    startNode-> next = NULL; 
+    temp = startNode;
+
+    for(i=2; i<=n; i++)
+    {
+        frontNode = (Node *)malloc(sizeof(Node));
+            
+        printf(" Input data for node %d : ", i);
+        scanf(" %d", &num);
+        
+        frontNode->num = num;      
+        frontNode->next = NULL;
+        temp->next = frontNode; 
+        temp = temp->next;
+    }
+}
+
+void reverseDispList()
+{
+    Node *prevNode, *currentNode;
+ 
+    if(startNode != NULL)
+    {
+        prevNode = startNode;
+        currentNode = startNode->next;
+        startNode = startNode->next;
+ 
+        prevNode->next = NULL; 
+ 
+        while(startNode != NULL)
+        {
+            startNode = startNode->next;
+            currentNode->next = prevNode;
+ 
+            prevNode = currentNode;
+            currentNode = startNode;
+        }
+        startNode = prevNode; 
+    }
+}
+
+void displayList()
+{
+    Node *temp;
+    
+    temp = startNode;
+    while(temp != NULL)
+    { 
+        printf(" Data = %d\n", temp->num);  
+        temp = temp->next;                 
+    }
+}
+ 
