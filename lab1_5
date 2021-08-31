@@ -1,0 +1,17 @@
+#include<stdio.h>
+int main()
+{
+  int a[10], i , sum=0;
+  int *p_a;
+  p_a = a;
+  for(i=0 ; i<10 ; i++)
+  {
+    scanf("%d",p_a+i);
+  }
+  for(i=0 ; i<10 ; i++)
+  {
+    sum = sum + *(p_a+i);
+  }
+  printf("The total is %d",sum);
+
+}
