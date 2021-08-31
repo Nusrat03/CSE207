@@ -1,0 +1,66 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct node{
+    int num;
+    struct node *next;
+}Node;
+
+Node *head;
+
+void createNodeList(int n)
+{
+    Node *temp_node, *last_node;
+    int num;
+
+    head = (Node *)malloc(sizeof(Node));
+    
+    printf("Enter data for node : 1\n");
+    scanf("%d", &num);
+
+    head->num = num;
+    head->next = NULL;
+    last_node = head;
+
+    for(int i = 2; i <= n; i++)
+    {
+        temp_node = (Node *)malloc(sizeof(Node));
+        printf("Enter data for node : %d\n",i);
+        scanf("%d", &num);
+
+        temp_node->num = num;
+        temp_node->next = NULL;
+
+        last_node->next = temp_node;
+        last_node = last_node->next;
+    }
+}
+
+void displayList()
+{
+    Node *temp;
+
+    temp = head;
+    while(temp != NULL)
+    {
+        printf("Data : %d\n", temp->num);
+        temp = temp->next;
+    }
+}
+
+int main()
+{
+    int n;
+
+    printf("To create and display linked list : \n");
+
+    printf("Enter the number of nodes : \n");
+    scanf("%d", &n);
+
+    createNodeList(n);
+
+    printf("Data entered in the list : \n");
+    displayList();
+
+    return 0;
+}
