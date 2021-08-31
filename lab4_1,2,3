@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+typedef struct Node {
+    int data;
+    struct Node *next;
+} Node;
+
+void pushNum(Node **node, int num) {
+    Node *temp = (Node *) malloc(sizeof(Node));
+
+    if (temp == NULL) {
+        printf("Stack overflow!\n");
+    } else {
+        temp->data = num;
+        temp->next = (*node);
+        (*node) = temp;
+        printf("Push successful!\n");
+    }
+}
+
+int popNum(Node **node) {
+    Node *deleteNode;
+    int x = -1;
+ 
+    if ((*node) == NULL) {
+        printf("Stack underflow!\n");
+    } else {
+        deleteNode = (*node);
+        (*node) = (*node)->next;
+        x = deleteNode->data;
+        free(deleteNode);
+        printf("Pop successful!\n");
+    }
+
+    return x;
+}
+
+void display(Node *node) {
+    printf("___\n");
+    while (node != NULL) {
+        printf("%d  |\n", node->data);
+        printf("___\n");
+        node = node->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    int input;
+    Node *stk = NULL;
+
+    do {
+        printf("\n");
+        printf("1.\tInsert data/ push stack\n");
+        printf("2.\tPrint stack\n");
+        printf("3.\tPop stack\n");
+        printf("\n");
+
+
+        printf("Option (-1 to exit): ");
+        scanf("%d", &input);
+
+        if (input == 1) {
+            int x;
+            printf("Enter an integer num: ");
+            scanf("%d", &x);
+
+            pushNum(&stk, x);
+
+        } else if (input == 2) {
+            display(stk);
+
+        } else if (input == 3) {
+            po(&stk);
+
+        } else if (input == -1) {
+            break;
+
+        } else {
+            printf("Choose one of the given option. \n");
+        }
+    } while (input);
+
+    return EXIT_SUCCESS;
+}
