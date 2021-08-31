@@ -1,0 +1,122 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node 
+{
+    int num;                    
+    struct node *next;       
+}Node;
+
+Node *structNode;
+
+void createNodeList(int n);     	
+void MiddleNodeDelete(int pos);	
+void displayList();             	
+
+int main()
+{
+    int n, num, pos;
+	
+    printf(" Delete a node from the middle of Singly Linked List. :\n");
+	
+    printf(" Input the number of nodes : ");
+    scanf("%d", &n);
+    createNodeList(n);
+
+    printf("\n Data entered in the list are : \n");		
+    displayList();
+    
+    printf("\n Input the position of node to delete : ");
+    scanf("%d", &pos);
+
+    if(pos<=1 || pos>=n)
+    {
+     printf("\n Deletion can not be possible from that position.\n ");
+    }
+
+	if(pos>1 && pos<n)
+    {
+       printf("\n Deletion completed successfully.\n ");
+	   MiddleNodeDelete(pos);
+    }
+
+	printf("\n The new list are  : \n");	
+    displayList();
+
+    return 0;
+}
+
+void createNodeList(int n)
+{
+    Node *frontNode, *temp;
+    int num, i;
+ 
+    structNode = (Node *)malloc(sizeof(Node));
+    
+    printf(" Input data for node 1 : ");
+    scanf("%d", &num);
+ 
+    structNode-> num = num;      
+    structNode-> next = NULL; 
+    temp = structNode;
+ 
+
+    for(i=2; i<=n; i++)
+    {
+        frontNode = (Node *)malloc(sizeof(Node));
+ 
+        printf(" Input data for node %d : ", i);
+        scanf(" %d", &num);
+ 
+        frontNode->num = num;     
+        frontNode->next = NULL; 
+ 
+        temp->next = frontNode; 
+        temp = temp->next;
+    }
+} 
+
+void MiddleNodeDelete(int pos)
+{
+    int i;
+    Node *del, *preNode;
+ 
+    del = structNode;
+    preNode = structNode;
+ 
+    for(i=2; i<=pos; i++)
+    {
+        preNode = del;
+        del = del->next;
+ 
+        if(del == NULL)
+        break;
+        
+        if(del != NULL)
+        {
+            if(del == structNode)
+            
+            structNode = structNode->next;
+ 
+            preNode->next = del->next;
+            del->next = NULL;
+            free(del);
+        }
+        else
+        {
+            printf(" Deletion can not be possible from that position.");
+        }
+    }
+}
+
+void displayList()
+{
+    Node *temp;
+    
+    temp = structNode;
+    while(temp != NULL)
+    {
+        printf(" Data = %d\n", temp->num);   
+        temp = temp->next;                 
+    }
+} 
