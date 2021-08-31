@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node{
+
+    int data;
+    struct Node *right;
+    struct Node *left;
+} Node;
+
+void inOrder(Node *root, int array[], int *nIndex){
+    
+    if(root->left != NULL){
+
+        inOrder(root->left, array, nIndex);
+    }
+
+    array[*nIndex] = root->data;
+    (*nIndex)++;
+
+    if(root->right != NULL){
+
+        inOrder(root->right, array, nIndex);
+    }
+}
+
+Node *createBinaryTreee(int array[], int index, int size){
+
+    Node *root = NULL;
+
+    if (index < size){
+
+        Node *temp = (Node *)malloc(sizeof(Node));
+        temp->data = array[index];
+        temp->left = temp->right = NULL;
+        root = temp;
+
+        root->left = createBinaryTreee(array, (2*index)+1, size);
+        root->right = createBinaryTreee(array, (2*index)+2, size);
+    }
+    return root;
+}
+
+int checkBinarySearchTree(int array[], int size){
+
+    int data = array[0];
+
+    for (int i = 1; i < size; i++){
+
+        if (data > array[i]){
+            return 0;
+        }
+        else{
+            data = array[i];
+        }
+    }
+    return 1;
+}
+
+void main(){
+
+    int size, index = 0, nIndex = 0, result;
+
+    printf("Enter the size of the array: ");
+    scanf("%d", &size);
+
+    int array[size], checkArray[size];
+
+    printf("Enter the array: ");
+    for (int i = 0; i<size; i++){
+
+        scanf("%d", &array[i]);
+    }
+
+    Node *root = createBinaryTreee(array, index, size);
+    inOrder(root, checkArray, &nIndex);
+
+    result = checkBST(int *array, int size)(checkArray, size);
+
+    if (result){
+        printf("True\n");
+    }
+    else{
+        printf("False\n");
+    }
+}
